@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+<form action="/users/form" method="post" th:action="@{~/users/form}" th:Object="${user}">
+    <input name="id" type="hidden" th:value="*{id}" />
+    <p>用户名：<input name = "name" type="text" th:value="*{name}" /></p>
+    <p>邮箱：<input name="email" type="email" th:value="*{email}" /></p>
+    <input name="createTime" type="hidden" th:value="*{createTime == null?#dates.createNow():createTime}" />
+    <p th:text="${errorMessage}"></p>
+    <input type="submit" value="提交" />
+</form>
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

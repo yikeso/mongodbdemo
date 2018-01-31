@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+<div th:if="${user == null}">
+    用户不存在
+</div>
+<div th:if="${user != null}" th:Object = "${user}">
+    <p>id：<input name="id" type="text" th:value="*{id}" readonly="true" /></p>
+    <p>用户名：<input name="name" type="text" th:value="*{name}" readonly="true" /></p>
+    <p>邮箱：<input name="email" type="email" th:value="*{email}" readonly="true" /></p>
+    <p>
+        <a href="form.html" th:href="@{'/users/modify/' + *{id}}">修改用户</a>
+        <a href="list.html" th:href="@{'javascript:deleteUser(\'' + *{id} + '\');'}">删除用户</a>
+    </p>
+</div>
+<div th:replace="fragments/footer::footer"></div>
+</body>
+<script src="/js/jquery-3.2.1.min.js" th:src="@{~/js/jquery-3.2.1.min.js}"></script>
+<script type="text/javascript">
+function deleteUser(id){
+    $.ajax({
+        type: "DELETE",// 此处发送的是delete请求
+        url: "/users/" + id,
+        success:function(data){
+            if(data.status == 0){
+                window.location.href="/users"
+            }else{
+                alert("用户删除失败！");
+            }
+        },
+        error: function (data) {
+            alert("用户删除失败！");
+       }
+    });
+    }
+
+</script>
+</html>
