@@ -6,9 +6,7 @@
     <meta charset="utf-8" />
 
 	<!-- CSRF -->
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<!-- default header name is X-CSRF-TOKEN -->
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<meta name="_csrf" th:content="${csrfToken}"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<title th:text="${title}">Title</title>
@@ -42,17 +40,22 @@
 	</script>
 </head>
 <body>
-	<div class="blog-masthead" data-th-fragment="header">
-	    <div class="container">
-	    <div class="row" >
-	 		<h1>Bootstrap in action</h1>
-	 
-	        <nav class="nav blog-nav">
-	          <a class="nav-link active" href="/users">首页</a>
-	          <a class="nav-link" href="/users">其他</a>
-	        </nav>
+	<nav data-th-fragment="header" class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+		<div class="container">
+			<button class="navbar-toggler navbar-toggler navbar-toggler-right"
+                    type="button" data-toggler="collapse"
+                    data-target="#navbarsContainer"></button>
+			<a class="navbar-brand" href="/" th:href="@{~/}">
+				KakasunBlog
+			</a>
+			<div class="collapse navbar-collapse" id="navbarsContainer">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="/list.html" th:href="@{~/users}">首页</a>
+                    </li>
+                </ul>
+			</div>
 		</div>
-	    </div>
-    </div>
+	</nav>
 </body>
 </html>

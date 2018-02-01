@@ -8,17 +8,19 @@
 </head>
 <body>
 <div th:replace="fragments/header::header"></div>
+<div class="container blog-content-container">
 <div th:if="${user == null}">
     用户不存在
 </div>
 <div th:if="${user != null}" th:Object = "${user}">
-    <p>id：<input name="id" type="text" th:value="*{id}" readonly="true" /></p>
-    <p>用户名：<input name="name" type="text" th:value="*{name}" readonly="true" /></p>
-    <p>邮箱：<input name="email" type="email" th:value="*{email}" readonly="true" /></p>
+    <p>id：<span name="id" type="text" th:text="*{id}" ></span></p>
+    <p>用户名：<span name="name" type="text" th:text="*{name}" ></span></p>
+    <p>邮箱：<span name="email" type="email" th:text="*{email}" ></span></p>
     <p>
         <a href="form.html" th:href="@{'/users/modify/' + *{id}}">修改用户</a>
         <a href="list.html" th:href="@{'javascript:deleteUser(\'' + *{id} + '\');'}">删除用户</a>
     </p>
+</div>
 </div>
 <div th:replace="fragments/footer::footer"></div>
 </body>
