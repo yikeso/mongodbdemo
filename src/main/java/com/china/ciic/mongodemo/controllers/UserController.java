@@ -1,5 +1,6 @@
 package com.china.ciic.mongodemo.controllers;
 
+import com.china.ciic.mongodemo.common.MyPasswordEncoder;
 import com.china.ciic.mongodemo.common.ServerResponse;
 import com.china.ciic.mongodemo.mongo.po.User;
 import com.china.ciic.mongodemo.mongo.repositories.UserRepository;
@@ -16,6 +17,9 @@ import java.util.Date;
 @Controller
 @RequestMapping("/users")
 public class UserController {
+
+    @Resource
+    MyPasswordEncoder myPasswordEncoder;
 
     @Resource
     UserRepository userRepository;
