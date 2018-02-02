@@ -3,6 +3,7 @@ package com.china.ciic.mongodemo.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -29,6 +30,18 @@ public class MainController {
         model.addAttribute("title","登录页面");
         model.addAttribute("logError",true);
         model.addAttribute("errorMsg","用户名或密码错误！");
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String registerPage(Model model){
+        model.addAttribute("title","注册页面");
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(Model model){
+        model.addAttribute("title","登录页面");
         return "login";
     }
 }
