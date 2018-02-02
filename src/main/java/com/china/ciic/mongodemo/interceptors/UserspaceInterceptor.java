@@ -17,6 +17,7 @@ public class UserspaceInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         UserDetails userDetails =null;
         try {
+            //未登录拦截
             userDetails = (UserDetails) SecurityContextHolder.getContext()
                     .getAuthentication()
                     .getPrincipal();
@@ -28,6 +29,7 @@ public class UserspaceInterceptor implements HandlerInterceptor {
         String username = userDetails.getUsername();
         String uri = httpServletRequest.getRequestURI();
         username = "/u/" + username;
+        //用户名与访问的userspace不一致拦截
         if(uri.startsWith(username)){
             return true;
         }
