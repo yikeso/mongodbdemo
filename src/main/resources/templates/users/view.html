@@ -26,7 +26,12 @@
 </body>
 <script src="/js/jquery-3.2.1.min.js" th:src="@{~/js/jquery-3.2.1.min.js}"></script>
 <script type="text/javascript">
+var lock = false;
 function deleteUser(id){
+    if(lock){
+        return;
+    }
+    lock = true;
     $.ajax({
         type: "DELETE",// 此处发送的是delete请求
         url: "/users/" + id,
@@ -36,9 +41,11 @@ function deleteUser(id){
             }else{
                 alert("用户删除失败！");
             }
+            lock = false;
         },
         error: function (data) {
             alert("用户删除失败！");
+            lock = false;
        }
     });
     }

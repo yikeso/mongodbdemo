@@ -3,13 +3,11 @@ package com.china.ciic.mongodemo.mongo.po;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * User实体
@@ -120,19 +118,19 @@ public class User extends IdEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> grantedAuthorities = null;
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
         if (CollectionUtils.isEmpty(authorities) && CollectionUtils.isEmpty(roles)) {
             return grantedAuthorities;
         }
         int i,size;
         if(!CollectionUtils.isEmpty(authorities)){
             for (i = 0,size = authorities.size();i < size;i++){
-                grantedAuthorities.add(new UserGrantedAuthority(authorities.get(i)));
+                grantedAuthorities.add(new SimpleGrantedAuthority(authorities.get(i)));
             }
         }
         if(!CollectionUtils.isEmpty(roles)){
             for (i = 0,size = roles.size();i < size;i++){
-                grantedAuthorities.add(new UserGrantedAuthority(roles.get(i)));
+                grantedAuthorities.add(new SimpleGrantedAuthority(roles.get(i)));
             }
         }
         return grantedAuthorities;
