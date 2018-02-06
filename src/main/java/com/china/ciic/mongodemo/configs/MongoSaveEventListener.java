@@ -3,13 +3,16 @@ package com.china.ciic.mongodemo.configs;
 import com.china.ciic.mongodemo.common.utils.UuidUtil;
 import com.china.ciic.mongodemo.mongo.po.IdEntity;
 import com.china.ciic.mongodemo.mongo.repositories.UserRepository;
+import com.mongodb.DBObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
+import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.data.mongodb.core.mapping.event.BeforeSaveEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

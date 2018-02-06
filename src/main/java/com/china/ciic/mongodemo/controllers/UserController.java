@@ -4,6 +4,7 @@ import com.china.ciic.mongodemo.common.MyPasswordEncoder;
 import com.china.ciic.mongodemo.common.ServerResponse;
 import com.china.ciic.mongodemo.mongo.po.User;
 import com.china.ciic.mongodemo.mongo.repositories.UserRepository;
+import com.china.ciic.mongodemo.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Resource
     UserRepository userRepository;
+
+    @Resource
+    UserService userService;
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
@@ -79,11 +83,13 @@ public class UserController {
         }
         if(StringUtils.isEmpty(user.getId())) {
             user.setCreateTime(new Date());
+            user = userRepository.insert(user);
+            log.debug("创建用户{}",user);
         }else {
             user.setUpdateTime(new Date());
+            userService.updateById(user);
+            log.debug("修改用户{}",user);
         }
-        user = userRepository.save(user);
-        log.debug("创建用户{}",user);
         return "redirect:/users";
     }
 

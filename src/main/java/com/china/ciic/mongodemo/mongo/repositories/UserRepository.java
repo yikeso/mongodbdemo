@@ -10,5 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends MongoRepository<User,String> {
 
+    /**
+     * 根据用户名查找用户
+     * @param name
+     * @return
+     */
+    User findByName(String name);
 
 }

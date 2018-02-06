@@ -1,5 +1,6 @@
 package com.china.ciic.mongodemo.common;
 
+import com.china.ciic.mongodemo.common.utils.ByteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +13,6 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class MyPasswordEncoder implements PasswordEncoder {
 
-    static final char[] HEX_DIGITS = "0123456789ABCDEF".toCharArray();
     private static final Logger log = LoggerFactory.getLogger(MyPasswordEncoder.class);
 
     /**
@@ -38,27 +38,13 @@ public class MyPasswordEncoder implements PasswordEncoder {
             }
             sha256.update(second);
             second = sha256.digest();
-            pwd = toHex(second);
+            pwd = ByteUtil.bytes2HexStr(second);
         }catch (NoSuchAlgorithmException e){
             log.error("密码明文加密错误",e);
         }catch (UnsupportedEncodingException e) {
             log.error("密码明文加密错误",e);
         }
         return pwd;
-    }
-
-    /**
-     * 将数组转换为16进制字符串
-     * @param bytes
-     * @return
-     */
-    static String toHex(byte[] bytes) {
-        StringBuilder ret = new StringBuilder(bytes.length * 2);
-        for (int i=0; i<bytes.length; i++) {
-            ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
-            ret.append(HEX_DIGITS[bytes[i] & 0x0f]);
-        }
-        return ret.toString();
     }
 
     /**
